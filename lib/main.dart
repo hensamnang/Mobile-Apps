@@ -1,147 +1,129 @@
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
-//stl
-class MyApp extends StatelessWidget {
+
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  bool checked = false;
+  String _username = "";
+  String getUseranme(String user) {
+    setState(() {
+      _username = user;
+    });
+    return _username;
+  }
+
+  String _password = " ";
+  String getPassword(String pass) {
+    setState(() {
+      _password = pass;
+    });
+    return _password;
+  }
+
+  String _result = " ";
+  void displayLogin() {
+    setState(() {
+      _result = _username + _password;
+      if (checked == true) {
+        _result =
+            "@Username" + " " + _username + "and @password" + " " + _password;
+      } else {
+        _result = "You are not yet agree !";
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-       home: Scaffold(
-         appBar: AppBar(
-           title: Text("Test Mobile App",
-            style: TextStyle(
-              fontFamily: "lover",
-              fontSize: 20.0,
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text("Form Login"),
+        ),
+        body: Column(
+          children: <Widget>[
+            Container(
+              margin: EdgeInsets.only(right: 20.0, left: 30.0),
+              padding: EdgeInsets.all(20.0),
+              child: TextField(
+                decoration: InputDecoration(
+                    labelText: 'Username', icon: Icon(Icons.person)),
+                onChanged: (String user) => getUseranme(user),
+              ),
             ),
-           ),
-           backgroundColor: Colors.pink[100],
-           //something it will float right forever use with action
-           actions: <Widget>[
-             Container(
-               child: Image.asset("assets/logo.png",width: 130.0,),
-             ),
-           ],
-           iconTheme: IconThemeData(color: Colors.pink),
-         ),
-         drawer: Drawer(
-           child: ListView(
-             children: <Widget>[
-               DrawerHeader(
-                 child: Center(
-                   child: CircleAvatar(
-                     radius: 60.0,
-                     backgroundImage: AssetImage("assets/1.jpg"),
-                   ),
-                 ),
-                 decoration: BoxDecoration(
-                   image: DecorationImage(
-                     image: AssetImage("assets/oo.jpg"),
-                     fit: BoxFit.cover,
-                   )
-                 ),
-               )
-             ],
-           ),
-         ),
-         body: ListView(
-           children: <Widget>[
-             Container(
-               child: Image.asset("assets/2.jpg"),
-             ),
-             Container(
-               margin: EdgeInsets.only(top: 10.0),
-               child: Row(
-                 //for row horizontall  
-                 mainAxisAlignment:MainAxisAlignment.center,
-                 children: <Widget>[
-                   Icon(Icons.favorite_border,color: Colors.pink[300],),
-                   Text("Just a Dream",
-                   style: TextStyle(
-                     fontSize: 40.0,
-                     fontFamily: "lover",
-                     color: Colors.pink[200]),),
-                 ],
-               ),
-             ),
-             Container(
-               child: Text("We strive to innovate in everything we do: online and mobile gaming, movies, infrastructure, content platforms and more. ",
-                style: TextStyle(fontSize:17.0 ),
-               ) 
-             ),
-             Container(
-               padding: EdgeInsets.only(left: 20.0,right: 20.0),
-               height: 50.0,
-               child: RaisedButton(
-                 child: Text("Please don't go",style: TextStyle(fontFamily: "lover",fontSize: 20.0,color: Colors.pink[50]),),
-                 color: Colors.pink[300],
-                 onPressed: (){},
-                 //for border radias 
-                 shape: RoundedRectangleBorder(
-                   borderRadius: BorderRadius.all(Radius.circular(50.0)),
-                   
-                 ),
-                 //when we click on button and then it chang color 
-                 splashColor: Colors.white,
-               ),
-             ),
-             Container(
-               //set size for it
-               margin: EdgeInsets.only(top: 10.0),
-               child: Image.asset("assets/1.jpg"),
-             ),
-             Container(
-               child: Row(
-                 children: <Widget>[
-                Expanded(
-                  child: Column(
-                    children: <Widget>[
-                      Icon(Icons.favorite_border,
-                      color: Colors.pink[200],
-                      ),
-                      Text("love" ,style: TextStyle(fontSize: 20.0,fontFamily: "lover"),),
-                    ],
+            Container(
+              margin: EdgeInsets.only(right: 20.0, left: 30.0),
+              padding: EdgeInsets.all(10.0),
+              child: TextField(
+                decoration: InputDecoration(
+                  icon: Icon(Icons.lock),
+                  labelText: 'Password',
+                ),
+                obscureText: true,
+                onChanged: (String pass) => getPassword(pass),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(left: 50.0),
+              child: Center(
+                child: Row(
+                  children: <Widget>[
+                    Checkbox(
+                      value: checked,
+                      onChanged: (bool value) {
+                        setState(() {
+                          checked = value;
+                        });
+                      },
+                    ),
+                    Text(
+                      "Are you agree ?",
+                      style: TextStyle(color: Colors.black, fontSize: 15.0),
+                    )
+                  ],
+                ),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(
+                top: 40.0,
+                bottom: 40.0,
+              ),
+              child: RaisedButton(
+                onPressed: displayLogin,
+                child: Text(
+                  "Login",
+                  style: TextStyle(color: Colors.white),
+                ),
+                color: Colors.blue,
+                splashColor: Colors.pink,
+              ),
+            ),
+            Container(
+              child: SizedBox(
+                width: 290.0,
+                height: 50.0,
+                child: Card(
+               child: Text(
+                  _result,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 15.0,
+                    backgroundColor: Colors.grey[200],
                   ),
-                ) ,  
-                Expanded(
-                  child: Column(
-                    children: <Widget>[
-                      Icon(Icons.home,
-                      color: Colors.pink[200],
-                      ),
-                      Text("home" ,style: TextStyle(fontSize: 20.0,fontFamily: "lover"),),
-                    ],
-                  ),
-                ) ,  
-                Expanded(
-                  child: Column(
-                    children: <Widget>[
-                      Icon(Icons.subway,
-                      color: Colors.pink[200],
-                      ),
-                      Text("like" ,style: TextStyle(fontSize: 20.0,fontFamily: "lover"),),
-                    ],
-                  ),
-                )   
-                
-                 ],
-               ),
-             ),
-             Container(
-               child: Text("We strive to innovate in everything we do: online and mobile gaming, movies, infrastructure, content platforms and more. ",
-                style: TextStyle(fontSize:17.0 ),
-               ) 
-             ),
-           ],
-         ),
-         floatingActionButton: FloatingActionButton.extended(
-           onPressed: (){},
-           label:Text("My love",style: TextStyle(fontFamily: "lover"),) ,
-           icon: Icon(Icons.favorite_border),
-           backgroundColor: Colors.pink[200],
-         ),
-         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-       ),
+                ),
+              ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
